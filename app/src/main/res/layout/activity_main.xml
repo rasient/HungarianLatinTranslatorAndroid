@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:transitionGroup="true">
+
+    <RelativeLayout android:id="@+id/mainLayoutHu"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:visibility="gone">
+        <LinearLayout android:id="@+id/linearLabelLayoutHu"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            style="@style/Green" >
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Magyar - Latin"
+                style="@style/Green" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Csere"
+                android:id="@+id/changeButtonHu"
+                android:layout_below="@+id/linearLayoutHu"
+                android:layout_centerHorizontal="true" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/linearLayoutHu"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/linearLabelLayoutHu">
+            <EditText
+                android:layout_alignParentLeft="true"
+                android:hint="Magyar..."
+                android:layout_weight="1"
+                android:layout_marginTop="46dp"
+                android:id="@+id/editTextHu"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent">
+            </EditText>
+            <ImageView
+                android:id = "@+id/speakHu"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginTop="46dp"
+                android:background = "?selectableItemBackground"
+                android:src = "@android:drawable/ic_btn_speak_now"/>
+        </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fordítás"
+            android:id="@+id/translateButtonHu"
+            android:layout_below="@+id/linearLayoutHu"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="46dp" />
+
+        <TextView android:id="@+id/textViewHu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/translateButtonHu"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="46dp" />
+    </RelativeLayout>
+
+    <RelativeLayout android:id="@+id/mainLayoutLa"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+
+        <LinearLayout android:id="@+id/linearLabelLayoutLa"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            style="@style/Green" >
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Latin - Magyar"
+                style="@style/Green" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Csere"
+                android:id="@+id/changeButtonLa"
+                android:layout_below="@+id/linearLayoutHu"
+                android:layout_centerHorizontal="true" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/linearLayoutLa"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/linearLabelLayoutLa">
+            <EditText
+                android:layout_alignParentLeft="true"
+                android:hint="Latin..."
+                android:layout_weight="1"
+                android:layout_marginTop="46dp"
+                android:id="@+id/editTextLa"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent">
+            </EditText>
+            <ImageView
+                android:id = "@+id/speakLa"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginTop="46dp"
+                android:background = "?selectableItemBackground"
+                android:src = "@android:drawable/ic_btn_speak_now"/>
+        </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fordítás"
+            android:id="@+id/translateButtonLa"
+            android:layout_below="@+id/linearLayoutLa"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="46dp" />
+
+        <TextView android:id="@+id/textViewLa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/translateButtonLa"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="46dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Készítette: Berg Alexander"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

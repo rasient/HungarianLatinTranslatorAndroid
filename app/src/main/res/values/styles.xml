@@ -1,0 +1,16 @@
+<resources>
+
+    <!-- Application theme. -->
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="Green" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">#008577</item>
+        <item name="android:textSize">22dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>
