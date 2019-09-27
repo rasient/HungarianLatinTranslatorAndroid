@@ -46,10 +46,11 @@ public class RetrieveTranslationHuLa extends AsyncTask<String, Void, List<String
             if (element == null) {
                 result.add("");
             } else {
-                result.add(element.text());
-                Document doc2 = Jsoup.connect(DICTIONARY_FORMAT+element.text().trim()).get();
+                String text = element.text().replaceAll("\\|","").toLowerCase().trim();
+                result.add(text);
+                Document doc2 = Jsoup.connect(DICTIONARY_FORMAT+text).get();
                 Element element2 = doc2.selectFirst("#r > tbody > tr:nth-child(2) > td:nth-child(1) > i");
-                if (element2 != null && doc2.selectFirst("#r > tbody > tr:nth-child(2) > td:nth-child(1) > b:nth-child(2)").text().toLowerCase().equals(element.text().toLowerCase())) {
+                if (element2 != null && doc2.selectFirst("#r > tbody > tr:nth-child(2) > td:nth-child(1) > b:nth-child(2)").text().toLowerCase().trim().equals(text)) {
                     result.add(element2.text());
                 }
             }
