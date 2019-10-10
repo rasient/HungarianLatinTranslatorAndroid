@@ -1,7 +1,9 @@
 package org.alexander.berg.hungarianlatintranslator;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ((AudioManager)getSystemService(Context.AUDIO_SERVICE)).setParameters("noise_suppression=on");
+
         editTextHu =findViewById(R.id.editTextHu);
         ImageView speakHu = findViewById(R.id.speakHu);
         textViewHu=findViewById(R.id.textViewHu);
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         textToSpeechHu =new TextToSpeech(getApplicationContext(), status -> {
             if(status != TextToSpeech.ERROR) {
                 textToSpeechHu.setLanguage(Locale.getDefault());
+                textToSpeechHu.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
 
@@ -59,19 +64,19 @@ public class MainActivity extends AppCompatActivity {
         textToSpeechLa =new TextToSpeech(getApplicationContext(), status -> {
             if(status != TextToSpeech.ERROR) {
                 textToSpeechLa.setLanguage(Locale.ITALY);
+                textToSpeechLa.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
 
         initComponents(editTextHu, speakHu, textViewHu, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLa, mainLayoutLa, Locale.getDefault(), RetrieveTranslationHuLa.class);
         initComponents(editTextLa, speakLa, textViewLa, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHu, mainLayoutHu, Locale.ITALY, RetrieveTranslationLaHu.class);
-        textToSpeechHu.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
-        textToSpeechLa.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     private void initComponents(final EditText editText, ImageView speak, final TextView textView, Button translateButton, Button changeButton, final RelativeLayout mainLayout, final TextToSpeech textToSpeech, final RelativeLayout mainLayoutNew, final Locale locale, final Class clazz) {
         speak.setOnClickListener(v -> {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, locale.getLanguage());
             intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1000);
             intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 1000);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, locale);
