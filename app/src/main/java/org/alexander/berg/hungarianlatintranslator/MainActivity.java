@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,22 +20,25 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.alexander.berg.hungarianlatintranslator.roomdb.Translation;
+import org.alexander.berg.hungarianlatintranslator.roomdb.TranslationDatabase;
+
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
+    TranslationDatabase db;
     private final int REQ_CODE = 100;
 
-    TextToSpeech textToSpeechLa;
-    EditText editTextHu;
-    TextView textViewHu;
+    TextToSpeech textToSpeechLaHu;
+    AutoCompleteTextView editTextHuLa;
+    TextView textViewHuLa;
     RelativeLayout mainLayoutHu;
 
-    TextToSpeech textToSpeechHu;
-    EditText editTextLa;
-    TextView textViewLa;
+    TextToSpeech textToSpeechHuLa;
+    AutoCompleteTextView editTextLaHu;
+    TextView textViewLaHu;
     RelativeLayout mainLayoutLa;
 
     @Override
@@ -41,45 +46,54 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ((AudioManager)getSystemService(Context.AUDIO_SERVICE)).setParameters("noise_suppression=on");
+        db = TranslationDatabase.getInstance(getApplicationContext());
 
-        editTextHu =findViewById(R.id.editTextHu);
+        editTextHuLa =findViewById(R.id.editTextHu);
+        AsyncTask.execute(() -> {
+            String [] words = db.translationDao().getAllWordHu();
+            runOnUiThread(() -> editTextHuLa.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, words)));
+        });
         ImageView speakHu = findViewById(R.id.speakHu);
-        textViewHu=findViewById(R.id.textViewHu);
+        textViewHuLa =findViewById(R.id.textViewHu);
         Button translateButtonHu=findViewById(R.id.translateButtonHu);
         Button changeButtonHu=findViewById(R.id.changeButtonHu);
         mainLayoutHu=findViewById(R.id.mainLayoutHu);
-        textToSpeechHu =new TextToSpeech(getApplicationContext(), status -> {
+        textToSpeechHuLa =new TextToSpeech(getApplicationContext(), status -> {
             if(status != TextToSpeech.ERROR) {
-                textToSpeechHu.setLanguage(Locale.getDefault());
-                textToSpeechHu.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
+                textToSpeechHuLa.setLanguage(Locale.getDefault());
+                textToSpeechHuLa.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
 
-        editTextLa =findViewById(R.id.editTextLa);
+        editTextLaHu =findViewById(R.id.editTextLa);
+        AsyncTask.execute(() -> {
+            String [] words = db.translationDao().getAllWordLa();
+            runOnUiThread(() -> editTextLaHu.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, words)));
+        });
         ImageView speakLa = findViewById(R.id.speakLa);
-        textViewLa=findViewById(R.id.textViewLa);
+        textViewLaHu =findViewById(R.id.textViewLa);
         Button translateButtonLa=findViewById(R.id.translateButtonLa);
         Button changeButtonLa=findViewById(R.id.changeButtonLa);
         mainLayoutLa=findViewById(R.id.mainLayoutLa);
-        textToSpeechLa =new TextToSpeech(getApplicationContext(), status -> {
+        textToSpeechLaHu =new TextToSpeech(getApplicationContext(), status -> {
             if(status != TextToSpeech.ERROR) {
-                textToSpeechLa.setLanguage(Locale.ITALY);
-                textToSpeechLa.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
+                textToSpeechLaHu.setLanguage(Locale.ITALY);
+                textToSpeechLaHu.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
 
-        initComponents(editTextHu, speakHu, textViewHu, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLa, mainLayoutLa, Locale.getDefault(), RetrieveTranslationHuLa.class);
-        initComponents(editTextLa, speakLa, textViewLa, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHu, mainLayoutHu, Locale.ITALY, RetrieveTranslationLaHu.class);
+        initComponents(editTextHuLa, speakHu, textViewHuLa, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLaHu, mainLayoutLa, Locale.getDefault(), Locale.ITALY, RetrieveTranslationHuLa.class);
+        initComponents(editTextLaHu, speakLa, textViewLaHu, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHuLa, mainLayoutHu, Locale.ITALY, Locale.getDefault(), RetrieveTranslationLaHu.class);
     }
 
-    private void initComponents(final EditText editText, ImageView speak, final TextView textView, Button translateButton, Button changeButton, final RelativeLayout mainLayout, final TextToSpeech textToSpeech, final RelativeLayout mainLayoutNew, final Locale locale, final Class clazz) {
+    private void initComponents(final EditText editText, ImageView speak, final TextView textView, Button translateButton, Button changeButton, final RelativeLayout mainLayout, final TextToSpeech textToSpeech, final RelativeLayout mainLayoutNew, final Locale localeFrom, final Locale localeTo, final Class clazz) {
         speak.setOnClickListener(v -> {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, locale.getLanguage());
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, localeFrom.getLanguage());
             intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1000);
             intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 1000);
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, locale);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, localeFrom);
             intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Beszélj :)");
             try {
                 startActivityForResult(intent, REQ_CODE);
@@ -92,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         translateButton.setOnClickListener(v -> {
             try {
-                speakAndWrite(editText, textView, textToSpeech, (AsyncTask<String, Void, List<String>>) clazz.newInstance());
+                speakAndWrite(localeFrom, localeTo, editText, textView, textToSpeech, (RetrieveTranslation) clazz.newInstance());
             } catch (IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
             }
@@ -109,26 +123,60 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_CODE && resultCode == RESULT_OK && null != data) {
             if (mainLayoutHu.getVisibility() == View.VISIBLE) {
-                editTextHu.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
-                speakAndWrite(editTextHu, textViewHu, textToSpeechLa, new RetrieveTranslationHuLa());
+                editTextHuLa.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
+                speakAndWrite(Locale.getDefault(), Locale.ITALY,editTextHuLa, textViewHuLa, textToSpeechLaHu, new RetrieveTranslationHuLa());
             } else {
-                editTextLa.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
-                speakAndWrite(editTextLa, textViewLa, textToSpeechHu, new RetrieveTranslationLaHu());
+                editTextLaHu.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
+                speakAndWrite(Locale.ITALY, Locale.getDefault(), editTextLaHu, textViewLaHu, textToSpeechHuLa, new RetrieveTranslationLaHu());
             }
         }
     }
 
-    private void speakAndWrite(EditText editText, TextView textView, final TextToSpeech textToSpeech, AsyncTask<String, Void, List<String>> retrieveTranslation) {
-        try {
-            List<String> resultList = retrieveTranslation.execute(editText.getText().toString().toLowerCase().trim().replace(" ", "%20")).get();
-            if (resultList.size() > 0) {
-                final String toSpeak = resultList.get(0);
-                textView.setText(resultList.size() == 2 ? resultList.get(0) + ',' + resultList.get(1) : toSpeak);
-                Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
-                textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
+    private void speakAndWrite(final Locale from, final Locale to, EditText editText, TextView textView, final TextToSpeech textToSpeech, RetrieveTranslation retrieveTranslation) {
+        String text = editText.getText().toString().toLowerCase().trim();
+        AsyncTask.execute(() -> {
+            String toSpeak = null;
+            String toShow = "";
+            if (from.equals(Locale.getDefault()) && to.equals(Locale.ITALY)) {
+                List<Translation> results = db.translationDao().findByWordHuLa(text);
+                for (Translation result : results) {
+                    if (toSpeak == null) {
+                        toSpeak = result.getWordLa();
+                    }
+                    if (!toShow.isEmpty()) {
+                        toShow = toShow + "\n";
+                    }
+                    toShow = toShow + result.getWordLa() + (!result.getSuffixLa().isEmpty() ? ", " : "") + result.getSuffixLa();
+                }
+            } else if (from.equals(Locale.ITALY) && to.equals(Locale.getDefault())) {
+                List<Translation> results = db.translationDao().findByWordLaHu(text);
+                for (Translation result : results) {
+                    if (toSpeak == null) {
+                        toSpeak = result.getWordHu();
+                    }
+                    if (!toShow.isEmpty()) {
+                        toShow = toShow + "\n";
+                    }
+                    toShow = toShow + result.getWordHu();
+                }
             }
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+            if (toSpeak == null || toSpeak.equals("")) {
+                List<String> resultList = null;
+                resultList = retrieveTranslation.geTranslatedText(text.replace(" ", "%20"));
+                if (resultList.size() > 0) {
+                    toSpeak = resultList.get(0);
+                    toShow = resultList.size() == 2 ? resultList.get(0) + ',' + resultList.get(1) : toSpeak;
+                }
+            }
+            final String toShowString = toShow;
+            final String toSpeakString = toSpeak;
+
+            runOnUiThread(() -> {
+                textView.setText(toShowString);
+                Toast.makeText(getApplicationContext(), toSpeakString,Toast.LENGTH_SHORT).show();
+                textToSpeech.speak(toSpeakString, TextToSpeech.QUEUE_FLUSH, null, null);
+            });
+
+        });
     }
 }

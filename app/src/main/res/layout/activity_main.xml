@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:layout_below="@+id/linearLabelLayoutHu">
-            <EditText
+            <AutoCompleteTextView
                 android:layout_alignParentLeft="true"
                 android:hint="Magyar..."
                 android:layout_weight="1"
@@ -41,7 +41,7 @@
                 android:id="@+id/editTextHu"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent">
-            </EditText>
+            </AutoCompleteTextView>
             <ImageView
                 android:id = "@+id/speakHu"
                 android:layout_width = "wrap_content"
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:layout_below="@+id/linearLabelLayoutLa">
-            <EditText
+            <AutoCompleteTextView
                 android:layout_alignParentLeft="true"
                 android:hint="Latin..."
                 android:layout_weight="1"
@@ -104,7 +104,7 @@
                 android:id="@+id/editTextLa"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent">
-            </EditText>
+            </AutoCompleteTextView>
             <ImageView
                 android:id = "@+id/speakLa"
                 android:layout_width = "wrap_content"
