@@ -25,18 +25,30 @@ public abstract class TranslationDatabase extends RoomDatabase {
     }
 
     private static TranslationDatabase buildDatabase(final Context context) {
-        return Room.databaseBuilder(context, TranslationDatabase.class,"translation1db")
+        return Room.databaseBuilder(context, TranslationDatabase.class,"translation2db")
                 .addCallback(new Callback() {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
                         super.onCreate(db);
                         Executors.newSingleThreadScheduledExecutor().execute(() -> {
                             TranslationDao translationDao = getInstance(context).translationDao();
-                            translationDao.insertAll(Translation.populateTranslationsA());
-                            translationDao.insertAll(Translation.populateTranslationsB());
-                            translationDao.insertAll(Translation.populateTranslationsC());
-                            translationDao.insertAll(Translation.populateTranslationsD());
-                            translationDao.insertAll(Translation.populateTranslationsE());
+                            translationDao.insertAll(Dictionary.populateTranslationsA());
+                            translationDao.insertAll(Dictionary.populateTranslationsB());
+                            translationDao.insertAll(Dictionary.populateTranslationsC());
+                            translationDao.insertAll(Dictionary.populateTranslationsD());
+                            translationDao.insertAll(Dictionary.populateTranslationsE());
+                            translationDao.insertAll(Dictionary.populateTranslationsF());
+                            translationDao.insertAll(Dictionary.populateTranslationsG());
+                            translationDao.insertAll(Dictionary.populateTranslationsH());
+                            translationDao.insertAll(Dictionary.populateTranslationsI());
+                            translationDao.insertAll(Dictionary.populateTranslationsJ());
+                            translationDao.insertAll(Dictionary.populateTranslationsK());
+                            translationDao.insertAll(Dictionary.populateTranslationsL());
+                            translationDao.insertAll(Dictionary.populateTranslationsM());
+                            translationDao.insertAll(Dictionary.populateTranslationsN());
+                            translationDao.insertAll(Dictionary.populateTranslationsO());
+                            translationDao.insertAll(Dictionary.populateTranslationsP());
+                            translationDao.insertAll(Dictionary.populateTranslationsR());
                         });
                     }
                 }).build();

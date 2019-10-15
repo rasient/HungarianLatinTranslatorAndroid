@@ -59,12 +59,24 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="46dp" />
 
-        <TextView android:id="@+id/textViewHu"
-            android:layout_width="wrap_content"
+        <LinearLayout android:id="@+id/linearInnerHu"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/translateButtonHu"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="46dp" />
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/translateButtonHu" >
+            <TextView android:id="@+id/textViewHu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="46dp" />
+            <ImageView
+                android:id = "@+id/playLaHu"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginTop="46dp"
+                android:src = "@android:drawable/ic_media_play"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout android:id="@+id/mainLayoutLa"
@@ -121,13 +133,24 @@
             android:layout_below="@+id/linearLayoutLa"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="46dp" />
-
-        <TextView android:id="@+id/textViewLa"
-            android:layout_width="wrap_content"
+        <LinearLayout android:id="@+id/linearInnerLa"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/translateButtonLa"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="46dp" />
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/translateButtonLa" >
+            <TextView android:id="@+id/textViewLa"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="46dp" />
+            <ImageView
+                android:id = "@+id/playHuLa"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginTop="46dp"
+                android:src = "@android:drawable/ic_media_play"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <TextView
@@ -135,6 +158,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Készítette: Berg Alexander"
+        android:text="
+        Adatok:\n
+        Bakó Alexandra Vivien,\n
+        Somodi Brigitta\n
+        Készítette:\n
+        Berg Alexander"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>
