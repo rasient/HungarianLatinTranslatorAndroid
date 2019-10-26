@@ -70,12 +70,6 @@
                 android:layout_weight="1"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="46dp" />
-            <ImageView
-                android:id = "@+id/playLaHu"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:layout_marginTop="46dp"
-                android:src = "@android:drawable/ic_media_play"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -144,12 +138,6 @@
                 android:layout_weight="1"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="46dp" />
-            <ImageView
-                android:id = "@+id/playHuLa"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:layout_marginTop="46dp"
-                android:src = "@android:drawable/ic_media_play"/>
         </LinearLayout>
     </RelativeLayout>
 

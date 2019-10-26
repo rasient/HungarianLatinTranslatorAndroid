@@ -25,7 +25,7 @@ public abstract class TranslationDatabase extends RoomDatabase {
     }
 
     private static TranslationDatabase buildDatabase(final Context context) {
-        return Room.databaseBuilder(context, TranslationDatabase.class,"translation2db")
+        return Room.databaseBuilder(context, TranslationDatabase.class,"translation")
                 .addCallback(new Callback() {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -49,6 +49,12 @@ public abstract class TranslationDatabase extends RoomDatabase {
                             translationDao.insertAll(Dictionary.populateTranslationsO());
                             translationDao.insertAll(Dictionary.populateTranslationsP());
                             translationDao.insertAll(Dictionary.populateTranslationsR());
+                            translationDao.insertAll(Dictionary.populateTranslationsS());
+                            translationDao.insertAll(Dictionary.populateTranslationsT());
+                            translationDao.insertAll(Dictionary.populateTranslationsU());
+                            translationDao.insertAll(Dictionary.populateTranslationsV());
+                            translationDao.insertAll(Dictionary.populateTranslationsY());
+                            translationDao.insertAll(Dictionary.populateTranslationsZ());
                         });
                     }
                 }).build();

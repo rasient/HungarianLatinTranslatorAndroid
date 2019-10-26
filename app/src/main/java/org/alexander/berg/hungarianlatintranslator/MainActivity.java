@@ -124,9 +124,11 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQ_CODE && resultCode == RESULT_OK && null != data) {
             if (mainLayoutHu.getVisibility() == View.VISIBLE) {
                 editTextHuLa.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
+                editTextHuLa.dismissDropDown();
                 speakAndWrite(Locale.getDefault(), Locale.ITALY,editTextHuLa, textViewHuLa, textToSpeechLaHu, new RetrieveTranslationHuLa());
             } else {
                 editTextLaHu.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
+                editTextLaHu.dismissDropDown();
                 speakAndWrite(Locale.ITALY, Locale.getDefault(), editTextLaHu, textViewLaHu, textToSpeechHuLa, new RetrieveTranslationLaHu());
             }
         }
