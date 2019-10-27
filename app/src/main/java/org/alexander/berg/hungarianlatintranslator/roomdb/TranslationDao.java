@@ -18,9 +18,9 @@ public interface TranslationDao {
     @Query("SELECT * FROM Translation WHERE wordLa LIKE :wordLa")
     List<Translation> findByWordLaHu(String wordLa);
 
-    @Query("SELECT wordHu FROM Translation")
+    @Query("SELECT DISTINCT wordHu FROM Translation")
     String[] getAllWordHu();
 
-    @Query("SELECT wordLa FROM Translation")
+    @Query("SELECT DISTINCT wordLa FROM Translation")
     String[] getAllWordLa();
 }
