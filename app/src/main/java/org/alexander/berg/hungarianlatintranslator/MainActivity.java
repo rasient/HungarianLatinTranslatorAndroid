@@ -1,5 +1,6 @@
 package org.alexander.berg.hungarianlatintranslator;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1000);
             intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 1000);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, localeFrom);
+            intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "org.alexander.berg");
             intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Beszélj :)");
             try {
                 startActivityForResult(intent, REQ_CODE);
@@ -106,6 +109,14 @@ public class MainActivity extends AppCompatActivity {
 
         translateButton.setOnClickListener(v -> {
             try {
+                InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                //Find the currently focused view, so we can grab the correct window token from it.
+                View view = this.getCurrentFocus();
+                //If no view currently has focus, create a new one, just so we can grab a window token from it
+                if (view == null) {
+                    view = new View(this);
+                }
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 speakAndWrite(localeFrom, localeTo, editText, textView, textToSpeech, (RetrieveTranslation) clazz.newInstance());
             } catch (IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();

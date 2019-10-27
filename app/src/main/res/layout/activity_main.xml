@@ -38,7 +38,7 @@
                 android:layout_alignParentLeft="true"
                 android:hint="Magyar..."
                 android:layout_weight="1"
-                android:layout_marginTop="46dp"
+                android:layout_marginTop="10dp"
                 android:id="@+id/editTextHu"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent">
@@ -47,7 +47,7 @@
                 android:id = "@+id/speakHu"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
-                android:layout_marginTop="46dp"
+                android:layout_marginTop="10dp"
                 android:background = "?selectableItemBackground"
                 android:src = "@android:drawable/ic_btn_speak_now"/>
         </LinearLayout>
@@ -58,7 +58,7 @@
             android:id="@+id/translateButtonHu"
             android:layout_below="@+id/linearLayoutHu"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="46dp" />
+            android:layout_marginTop="10dp" />
 
         <LinearLayout android:id="@+id/linearInnerHu"
             android:orientation="horizontal"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="46dp" />
+                android:layout_marginTop="10dp" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -107,7 +107,7 @@
                 android:layout_alignParentLeft="true"
                 android:hint="Latin..."
                 android:layout_weight="1"
-                android:layout_marginTop="46dp"
+                android:layout_marginTop="10dp"
                 android:id="@+id/editTextLa"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent">
@@ -116,7 +116,7 @@
                 android:id = "@+id/speakLa"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
-                android:layout_marginTop="46dp"
+                android:layout_marginTop="10dp"
                 android:background = "?selectableItemBackground"
                 android:src = "@android:drawable/ic_btn_speak_now"/>
         </LinearLayout>
@@ -127,7 +127,7 @@
             android:id="@+id/translateButtonLa"
             android:layout_below="@+id/linearLayoutLa"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="46dp" />
+            android:layout_marginTop="10dp" />
         <LinearLayout android:id="@+id/linearInnerLa"
             android:orientation="horizontal"
             android:layout_height="wrap_content"
@@ -138,25 +138,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="46dp" />
+                android:layout_marginTop="10dp" />
         </LinearLayout>
     </RelativeLayout>
 
-    <ImageView
+    <com.ortiz.touchview.TouchImageView
         android:id="@+id/table"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/declinatio"
-        android:layout_alignParentBottom="true" />
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="
-        Adatok:          Bakó Alexandra Vivien,\n
-                                Somodi Brigitta\n
-        Ikon:               Jojo Mendoza\n
-        Készítette:     Berg Alexander"
-        android:layout_alignParentBottom="true"/>
+        android:layout_marginTop="220dp" />
 </RelativeLayout>
