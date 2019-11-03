@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView editTextLaHu;
     TextView textViewLaHu;
     RelativeLayout mainLayoutLa;
+    TextView suffixLa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,22 @@ public class MainActivity extends AppCompatActivity {
             String [] words = db.translationDao().getAllWordLa();
             runOnUiThread(() -> editTextLaHu.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, words)));
         });
+        editTextLaHu.setOnClickListener(v -> suffixLa.setText(""));
+        editTextLaHu.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                AsyncTask.execute(() -> {
+                    String suffix = db.translationDao().findSuffixByLa(s.toString());
+                    runOnUiThread(() -> suffixLa.setText(suffix));
+                });
+            }
+        });
         ImageView speakLa = findViewById(R.id.speakLa);
         textViewLaHu =findViewById(R.id.textViewLa);
         Button translateButtonLa=findViewById(R.id.translateButtonLa);
@@ -83,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 textToSpeechLaHu.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
+        suffixLa =findViewById(R.id.suffixLa);
 
         initComponents(editTextHuLa, speakHu, textViewHuLa, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLaHu, mainLayoutLa, Locale.getDefault(), Locale.ITALY, RetrieveTranslationHuLa.class);
         initComponents(editTextLaHu, speakLa, textViewLaHu, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHuLa, mainLayoutHu, Locale.ITALY, Locale.getDefault(), RetrieveTranslationLaHu.class);

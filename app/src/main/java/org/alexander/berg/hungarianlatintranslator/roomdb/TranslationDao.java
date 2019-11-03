@@ -23,4 +23,7 @@ public interface TranslationDao {
 
     @Query("SELECT DISTINCT wordLa FROM Translation")
     String[] getAllWordLa();
+
+    @Query("SELECT suffixLa FROM Translation WHERE wordLa LIKE :wordLa LIMIT 1")
+    String findSuffixByLa(String wordLa);
 }

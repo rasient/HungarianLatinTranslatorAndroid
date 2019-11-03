@@ -120,12 +120,19 @@
                 android:background = "?selectableItemBackground"
                 android:src = "@android:drawable/ic_btn_speak_now"/>
         </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/suffixLa"
+            android:layout_below="@+id/linearLayoutLa"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fordítás"
             android:id="@+id/translateButtonLa"
-            android:layout_below="@+id/linearLayoutLa"
+            android:layout_below="@+id/suffixLa"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp" />
         <LinearLayout android:id="@+id/linearInnerLa"

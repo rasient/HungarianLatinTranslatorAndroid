@@ -161,7 +161,7 @@ class Dictionary {
                 new Translation("beteg", "patiens", "-ntis,m"),
                 new Translation("beteg", "aegrotus", "3"),
                 new Translation("betegség", "morbus", "-i,m"),
-                new Translation("bicepsz", "biceps", "bicepitis"),
+                new Translation("bicepsz", "biceps", "bicipitis"),
                 new Translation("billentyű", "valvula", "-ae,f"),
                 new Translation("billentyű", "valva", "-ae,f"),
                 new Translation("boholy", "villus", "-i,m"),
@@ -295,6 +295,7 @@ class Dictionary {
                 new Translation("egyenetlen", "scanelus", "3"),
                 new Translation("egyenlő", "aequalis", "-e"),
 
+                new Translation("egyenes", "rectus", "3"),
                 new Translation("egyenlő", "aequalis", "-e"),
                 new Translation("egyforma", "aequalis", "-e"),
                 new Translation("egylebenyű", "unilobaris", "-e"),
@@ -659,7 +660,7 @@ class Dictionary {
                 new Translation("harántnyúlványok közti", "intertransversarius", "3"),
                 new Translation("harapás", "morsus", "-us,m"),
                 new Translation("harapott", "morsus", "3"),
-                new Translation("háromfejű", "triceps", "tricepitis"),
+                new Translation("háromfejű", "triceps", "tricipitis"),
                 new Translation("háromosztatú", "trigeminus", "3"),
                 new Translation("háromszor", "ter", ""),
                 new Translation("hártya", "membrana", "-ae,f"),
@@ -1014,7 +1015,7 @@ class Dictionary {
                 new Translation("külső elválasztású", "exocrinus", "3"),
                 new Translation("külső parazita", "ectozoon", "-i,n"),
                 new Translation("kürt", "tuba", "-ae,f"),
-                new Translation("kvadricepsz", "quadriceps", "-quadricipitis"),
+                new Translation("kvadricepsz", "quadriceps", "quadricipitis"),
         };
     }
 
