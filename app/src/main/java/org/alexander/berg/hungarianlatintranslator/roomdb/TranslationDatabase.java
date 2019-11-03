@@ -6,14 +6,25 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Translation.class}, version = 1, exportSchema = false)
+@Database(entities = {Translation.class}, version = 2, exportSchema = false)
 public abstract class TranslationDatabase extends RoomDatabase {
     private static TranslationDatabase dbInstance;
     private static final Object LOCK = new Object();
+    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('egyenes', 'rectus', '3')");
+            database.execSQL("update Translation set suffixLa = 'bicipitis' where wordHu = 'bicepsz'");
+            database.execSQL("update Translation set suffixLa = 'bicipitis' where wordHu = 'kétfejű'");
+            database.execSQL("update Translation set suffixLa = 'tricipitis' where wordHu = 'háromfejű'");
+            database.execSQL("update Translation set suffixLa = 'quadricipitis' where wordHu = 'kvadricepsz'");
+        }
+    };
 
     public static TranslationDatabase getInstance(Context context) {
         if (dbInstance == null) {
@@ -57,7 +68,7 @@ public abstract class TranslationDatabase extends RoomDatabase {
                             translationDao.insertAll(Dictionary.populateTranslationsZ());
                         });
                     }
-                }).build();
+                }).addMigrations(MIGRATION_1_2).build();
     }
 
     public abstract TranslationDao translationDao();

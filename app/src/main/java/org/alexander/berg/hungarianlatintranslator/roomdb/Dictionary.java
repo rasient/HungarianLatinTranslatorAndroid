@@ -877,7 +877,7 @@ class Dictionary {
                 new Translation("készülék", "apparatus", "-us,m"),
                 new Translation("készült", "compositus", "3"),
                 new Translation("két pólusú", "bipolaris", "-e"),
-                new Translation("kétfejű", "biceps", "bicepitis"),
+                new Translation("kétfejű", "biceps", "bicipitis"),
                 new Translation("kéthasú", "biventer", "-tris"),
                 new Translation("kéthegyű", "bicuspidalis", "-e"),
                 new Translation("kéthegyű", "mitralis", "-e"),
