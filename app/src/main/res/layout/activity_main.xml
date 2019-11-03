@@ -16,18 +16,16 @@
             android:layout_width="fill_parent"
             style="@style/Green" >
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Magyar - Latin"
+                android:text="@string/magyar_latin"
                 style="@style/Green" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Csere"
-                android:id="@+id/changeButtonHu"
-                android:layout_below="@+id/linearLayoutHu"
-                android:layout_centerHorizontal="true" />
+                android:text="@string/csere"
+                android:id="@+id/changeButtonHu" />
         </LinearLayout>
         <LinearLayout android:id="@+id/linearLayoutHu"
             android:orientation="horizontal"
@@ -35,13 +33,12 @@
             android:layout_width="fill_parent"
             android:layout_below="@+id/linearLabelLayoutHu">
             <AutoCompleteTextView
-                android:layout_alignParentLeft="true"
-                android:hint="Magyar..."
+                android:hint="@string/magyar"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
                 android:id="@+id/editTextHu"
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent">
+                android:layout_width="0dp">
             </AutoCompleteTextView>
             <ImageView
                 android:id = "@+id/speakHu"
@@ -49,12 +46,13 @@
                 android:layout_height = "wrap_content"
                 android:layout_marginTop="10dp"
                 android:background = "?selectableItemBackground"
-                android:src = "@android:drawable/ic_btn_speak_now"/>
+                android:src = "@android:drawable/ic_btn_speak_now"
+                android:contentDescription="@string/mikrofon" />
         </LinearLayout>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fordítás"
+            android:text="@string/forditas"
             android:id="@+id/translateButtonHu"
             android:layout_below="@+id/linearLayoutHu"
             android:layout_centerHorizontal="true"
@@ -66,10 +64,9 @@
             android:layout_width="fill_parent"
             android:layout_below="@+id/translateButtonHu" >
             <TextView android:id="@+id/textViewHu"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp" />
         </LinearLayout>
     </RelativeLayout>
@@ -84,18 +81,16 @@
             android:layout_width="fill_parent"
             style="@style/Green" >
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Latin - Magyar"
+                android:text="@string/latin_magyar"
                 style="@style/Green" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Csere"
-                android:id="@+id/changeButtonLa"
-                android:layout_below="@+id/linearLayoutHu"
-                android:layout_centerHorizontal="true" />
+                android:text="@string/csere"
+                android:id="@+id/changeButtonLa" />
         </LinearLayout>
 
         <LinearLayout android:id="@+id/linearLayoutLa"
@@ -104,13 +99,12 @@
             android:layout_width="fill_parent"
             android:layout_below="@+id/linearLabelLayoutLa">
             <AutoCompleteTextView
-                android:layout_alignParentLeft="true"
-                android:hint="Latin..."
+                android:hint="@string/latin"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
                 android:id="@+id/editTextLa"
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent">
+                android:layout_width="0dp">
             </AutoCompleteTextView>
             <ImageView
                 android:id = "@+id/speakLa"
@@ -118,7 +112,8 @@
                 android:layout_height = "wrap_content"
                 android:layout_marginTop="10dp"
                 android:background = "?selectableItemBackground"
-                android:src = "@android:drawable/ic_btn_speak_now"/>
+                android:src = "@android:drawable/ic_btn_speak_now"
+                android:contentDescription="@string/mikrofon" />
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -130,7 +125,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fordítás"
+            android:text="@string/forditas"
             android:id="@+id/translateButtonLa"
             android:layout_below="@+id/suffixLa"
             android:layout_centerHorizontal="true"
@@ -141,10 +136,9 @@
             android:layout_width="fill_parent"
             android:layout_below="@+id/translateButtonLa" >
             <TextView android:id="@+id/textViewLa"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp" />
         </LinearLayout>
     </RelativeLayout>

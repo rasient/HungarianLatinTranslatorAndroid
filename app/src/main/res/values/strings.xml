@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Translator</string>
+    <string name="magyar_latin">Magyar - Latin</string>
+    <string name="csere">Csere</string>
+    <string name="magyar">Magyar…</string>
+    <string name="mikrofon">Mikrofon</string>
+    <string name="forditas">Fordítás</string>
+    <string name="latin_magyar">Latin - Magyar</string>
+    <string name="latin">Latin…</string>
 </resources>

@@ -29,6 +29,7 @@ import org.alexander.berg.hungarianlatintranslator.roomdb.TranslationDatabase;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ((AudioManager)getSystemService(Context.AUDIO_SERVICE)).setParameters("noise_suppression=on");
+        ((AudioManager) Objects.requireNonNull(getSystemService(Context.AUDIO_SERVICE))).setParameters("noise_suppression=on");
         db = TranslationDatabase.getInstance(getApplicationContext());
 
         editTextHuLa =findViewById(R.id.editTextHu);
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 if (view == null) {
                     view = new View(this);
                 }
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                Objects.requireNonNull(imm).hideSoftInputFromWindow(view.getWindowToken(), 0);
                 speakAndWrite(localeFrom, localeTo, editText, textView, textToSpeech, (RetrieveTranslation) clazz.newInstance());
             } catch (IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
@@ -154,11 +155,11 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_CODE && resultCode == RESULT_OK && null != data) {
             if (mainLayoutHu.getVisibility() == View.VISIBLE) {
-                editTextHuLa.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
+                editTextHuLa.setText(Objects.requireNonNull(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)).get(0));
                 editTextHuLa.dismissDropDown();
                 speakAndWrite(Locale.getDefault(), Locale.ITALY,editTextHuLa, textViewHuLa, textToSpeechLaHu, new RetrieveTranslationHuLa());
             } else {
-                editTextLaHu.setText(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
+                editTextLaHu.setText(Objects.requireNonNull(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)).get(0));
                 editTextLaHu.dismissDropDown();
                 speakAndWrite(Locale.ITALY, Locale.getDefault(), editTextLaHu, textViewLaHu, textToSpeechHuLa, new RetrieveTranslationLaHu());
             }
@@ -169,17 +170,17 @@ public class MainActivity extends AppCompatActivity {
         String text = editText.getText().toString().toLowerCase().trim();
         AsyncTask.execute(() -> {
             String toSpeak = null;
-            String toShow = "";
+            StringBuilder toShow = new StringBuilder();
             if (from.equals(Locale.getDefault()) && to.equals(Locale.ITALY)) {
                 List<Translation> results = db.translationDao().findByWordHuLa(text);
                 for (Translation result : results) {
                     if (toSpeak == null) {
                         toSpeak = result.getWordLa();
                     }
-                    if (!toShow.isEmpty()) {
-                        toShow = toShow + "\n";
+                    if (toShow.length() > 0) {
+                        toShow.append("\n");
                     }
-                    toShow = toShow + result.getWordLa() + (!result.getSuffixLa().isEmpty() ? ", " : "") + result.getSuffixLa();
+                    toShow.append(result.getWordLa()).append(!result.getSuffixLa().isEmpty() ? ", " : "").append(result.getSuffixLa());
                 }
             } else if (from.equals(Locale.ITALY) && to.equals(Locale.getDefault())) {
                 List<Translation> results = db.translationDao().findByWordLaHu(text);
@@ -187,21 +188,20 @@ public class MainActivity extends AppCompatActivity {
                     if (toSpeak == null) {
                         toSpeak = result.getWordHu();
                     }
-                    if (!toShow.isEmpty()) {
-                        toShow = toShow + "\n";
+                    if (toShow.length() > 0) {
+                        toShow.append("\n");
                     }
-                    toShow = toShow + result.getWordHu();
+                    toShow.append(result.getWordHu());
                 }
             }
             if (toSpeak == null || toSpeak.equals("")) {
-                List<String> resultList = null;
-                resultList = retrieveTranslation.geTranslatedText(text.replace(" ", "%20"));
+                List<String> resultList = retrieveTranslation.geTranslatedText(text.replace(" ", "%20"));
                 if (resultList.size() > 0) {
                     toSpeak = resultList.get(0);
-                    toShow = resultList.size() == 2 ? resultList.get(0) + ',' + resultList.get(1) : toSpeak;
+                    toShow = new StringBuilder(resultList.size() == 2 ? resultList.get(0) + ',' + resultList.get(1) : toSpeak);
                 }
             }
-            final String toShowString = toShow;
+            final String toShowString = toShow.toString();
             final String toSpeakString = toSpeak;
 
             runOnUiThread(() -> {
