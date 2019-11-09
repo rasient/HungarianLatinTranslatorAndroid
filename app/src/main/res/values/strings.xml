@@ -7,4 +7,12 @@
     <string name="forditas">Fordítás</string>
     <string name="latin_magyar">Latin - Magyar</string>
     <string name="latin">Latin…</string>
+
+    <string-array name="declinatio_images">
+        <item>Főnévragozás</item>
+        <item>Melléknévragozás</item>
+        <item>Tipikus szótári alakok</item>
+        <item>Előljárószavak</item>
+    </string-array>
+
 </resources>

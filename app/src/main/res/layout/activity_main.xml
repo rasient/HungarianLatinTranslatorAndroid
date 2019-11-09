@@ -142,11 +142,17 @@
                 android:layout_marginTop="10dp" />
         </LinearLayout>
     </RelativeLayout>
-
+    <Spinner
+        android:id="@+id/declinatioSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/declinatio_images"
+        android:layout_marginTop="240dp"/>
     <com.ortiz.touchview.TouchImageView
-        android:id="@+id/table"
+        android:id="@+id/declinatioImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/declinatio"
-        android:layout_marginTop="220dp" />
+        app:srcCompat="@drawable/declinatio1"
+        android:theme="@style/SpinnerItem"
+        android:layout_marginTop="280dp" />
 </RelativeLayout>

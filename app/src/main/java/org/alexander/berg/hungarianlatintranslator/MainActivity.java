@@ -13,16 +13,21 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.ortiz.touchview.TouchImageView;
 
 import org.alexander.berg.hungarianlatintranslator.roomdb.Translation;
 import org.alexander.berg.hungarianlatintranslator.roomdb.TranslationDatabase;
@@ -107,6 +112,17 @@ public class MainActivity extends AppCompatActivity {
 
         initComponents(editTextHuLa, speakHu, textViewHuLa, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLaHu, mainLayoutLa, Locale.getDefault(), Locale.ITALY, RetrieveTranslationHuLa.class);
         initComponents(editTextLaHu, speakLa, textViewLaHu, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHuLa, mainLayoutHu, Locale.ITALY, Locale.getDefault(), RetrieveTranslationLaHu.class);
+        Spinner declinatioSpinner = findViewById(R.id.declinatioSpinner);
+        final TouchImageView declinatioImageView = findViewById(R.id.declinatioImageView);
+        declinatioSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                declinatioImageView.setImageResource( id == 0 ? R.drawable.declinatio0 : (id == 1 ? R.drawable.declinatio1 : (id == 2 ? R.drawable.declinatio2 : R.drawable.praepositio)));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
     }
 
     private void initComponents(final EditText editText, ImageView speak, final TextView textView, Button translateButton, Button changeButton, final RelativeLayout mainLayout, final TextToSpeech textToSpeech, final RelativeLayout mainLayoutNew, final Locale localeFrom, final Locale localeTo, final Class clazz) {

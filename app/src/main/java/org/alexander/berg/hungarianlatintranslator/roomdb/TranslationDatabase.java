@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Translation.class}, version = 2, exportSchema = false)
+@Database(entities = {Translation.class}, version = 3, exportSchema = false)
 public abstract class TranslationDatabase extends RoomDatabase {
     private static TranslationDatabase dbInstance;
     private static final Object LOCK = new Object();
@@ -23,6 +23,20 @@ public abstract class TranslationDatabase extends RoomDatabase {
             database.execSQL("update Translation set suffixLa = 'bicipitis' where wordHu = 'kétfejű'");
             database.execSQL("update Translation set suffixLa = 'tricipitis' where wordHu = 'háromfejű'");
             database.execSQL("update Translation set suffixLa = 'quadricipitis' where wordHu = 'kvadricepsz'");
+        }
+    };
+    private static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('vesekelyhek', 'calices renales', '')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('öreglyuk', 'foramen magnum', '')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('homloküreg', 'sinus frontalis', '')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('csigolyatest', 'corpus vertebrae', '')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('csigolyaív', 'corpus vertebrae', '')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('csigolyanyúlvány', 'processus vertebralis', '')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('csigolyalyuk', 'foramen vertebrale', '')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('hallócsontocska', 'ossiculum auditus', '')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('érzékszerv', 'organa sensuum', '')");
         }
     };
 
@@ -68,7 +82,7 @@ public abstract class TranslationDatabase extends RoomDatabase {
                             translationDao.insertAll(Dictionary.populateTranslationsZ());
                         });
                     }
-                }).addMigrations(MIGRATION_1_2).build();
+                }).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build();
     }
 
     public abstract TranslationDao translationDao();
