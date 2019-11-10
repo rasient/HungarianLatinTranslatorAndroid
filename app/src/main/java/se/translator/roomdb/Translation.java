@@ -1,6 +1,7 @@
-package org.alexander.berg.hungarianlatintranslator.roomdb;
+package se.translator.roomdb;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import lombok.Data;
@@ -16,6 +17,7 @@ public class Translation {
     private String wordLa;
     private String suffixLa;
 
+    @Ignore
     Translation(String wordHu, String wordLa, String suffixLa) {
         this.wordHu = wordHu;
         this.wordLa = wordLa;

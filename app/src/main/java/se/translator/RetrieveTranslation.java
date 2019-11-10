@@ -1,4 +1,4 @@
-package org.alexander.berg.hungarianlatintranslator;
+package se.translator;
 
 import java.util.List;
 

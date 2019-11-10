@@ -1,4 +1,4 @@
-package org.alexander.berg.hungarianlatintranslator;
+package se.translator;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -29,8 +29,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ortiz.touchview.TouchImageView;
 
-import org.alexander.berg.hungarianlatintranslator.roomdb.Translation;
-import org.alexander.berg.hungarianlatintranslator.roomdb.TranslationDatabase;
+import org.alexander.berg.hungarianlatintranslator.R;
+
+import se.translator.roomdb.Translation;
+import se.translator.roomdb.TranslationDatabase;
 
 import java.util.List;
 import java.util.Locale;

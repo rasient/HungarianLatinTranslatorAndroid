@@ -1,4 +1,4 @@
-package org.alexander.berg.hungarianlatintranslator.roomdb;
+package se.translator.roomdb;
 
 //source: Orvosi latin és egészségügyi terminológia written by: Bakó Alexandra Vivien, Somodi Brigitta
 class Dictionary {

@@ -1,4 +1,4 @@
-package org.alexander.berg.hungarianlatintranslator.roomdb;
+package se.translator.roomdb;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package org.alexander.berg.hungarianlatintranslator;
+package se.translator;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
