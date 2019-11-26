@@ -54,7 +54,7 @@ public abstract class TranslationDatabase extends RoomDatabase {
             database.execSQL("update Translation set wordLa = 'letalis' where wordLa = 'lethalis'");
         }
     };
-    private static final Migration MIGRATION_4_5 = new Migration(1, 2) {
+    private static final Migration MIGRATION_4_5 = new Migration(4, 5) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('testi betegésgeket beképzelő', 'hypohonder', 'i,m')");
