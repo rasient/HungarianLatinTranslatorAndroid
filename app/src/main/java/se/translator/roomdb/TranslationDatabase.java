@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Translation.class}, version = 3, exportSchema = false)
+@Database(entities = {Translation.class}, version = 4, exportSchema = false)
 public abstract class TranslationDatabase extends RoomDatabase {
     private static TranslationDatabase dbInstance;
     private static final Object LOCK = new Object();
@@ -37,6 +37,21 @@ public abstract class TranslationDatabase extends RoomDatabase {
             database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('csigolyalyuk', 'foramen vertebrale', '')");
             database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('hallócsontocska', 'ossiculum auditus', '')");
             database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('érzékszerv', 'organa sensuum', '')");
+        }
+    };
+
+    private static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('őrlő', 'molaris', '3')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('mély', 'profundus', '3')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('mélyen lévő', 'profundus', '3')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('ájulás', 'collapsus', '-us,m')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('égető', 'imminens', '-ntis')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('ülőgumó', 'tuber ischiadicum', '')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('pajzsmirigy artéria', 'arteria thyroidea', '')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('mellkasnak harántnyúlványok közti izmai', 'musculi intertransversarii thoracis', '')");
+            database.execSQL("update Translation set wordLa = 'letalis' where wordLa = 'lethalis'");
         }
     };
 
@@ -82,7 +97,7 @@ public abstract class TranslationDatabase extends RoomDatabase {
                             translationDao.insertAll(Dictionary.populateTranslationsZ());
                         });
                     }
-                }).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build();
+                }).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4).build();
     }
 
     public abstract TranslationDao translationDao();

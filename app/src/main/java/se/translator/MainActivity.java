@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         declinatioSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                declinatioImageView.setImageResource( id == 0 ? R.drawable.declinatio0 : (id == 1 ? R.drawable.declinatio1 : (id == 2 ? R.drawable.declinatio2 : R.drawable.praepositio)));
+                declinatioImageView.setImageResource( id == 0 ? R.drawable.declinatio0 : (id == 1 ? R.drawable.declinatio1 : (id == 2 ? R.drawable.declinatio2 : (id == 3 ? R.drawable.praepositio : R.drawable.prefix))));
             }
 
             @Override
