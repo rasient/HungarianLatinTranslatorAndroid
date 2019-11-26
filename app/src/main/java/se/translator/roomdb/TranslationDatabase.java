@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Translation.class}, version = 4, exportSchema = false)
+@Database(entities = {Translation.class}, version = 5, exportSchema = false)
 public abstract class TranslationDatabase extends RoomDatabase {
     private static TranslationDatabase dbInstance;
     private static final Object LOCK = new Object();
