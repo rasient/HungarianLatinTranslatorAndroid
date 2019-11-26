@@ -54,6 +54,13 @@ public abstract class TranslationDatabase extends RoomDatabase {
             database.execSQL("update Translation set wordLa = 'letalis' where wordLa = 'lethalis'");
         }
     };
+    private static final Migration MIGRATION_4_5 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('testi betegésgeket beképzelő', 'hypohonder', 'i,m')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('lelki betegésgeket beképzelő', 'psychohonder', 'i,m')");
+        }
+    };
 
     public static TranslationDatabase getInstance(Context context) {
         if (dbInstance == null) {
@@ -97,7 +104,7 @@ public abstract class TranslationDatabase extends RoomDatabase {
                             translationDao.insertAll(Dictionary.populateTranslationsZ());
                         });
                     }
-                }).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4).build();
+                }).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5).build();
     }
 
     public abstract TranslationDao translationDao();

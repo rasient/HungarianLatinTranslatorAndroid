@@ -765,6 +765,8 @@ class Dictionary {
                 new Translation("hűsítő", "refrigerans", "-ntis"),
                 new Translation("hüvelykujj", "pollex", "-icis,m"),
                 new Translation("hypochondriában szenvedő", "hpyochonder", "-i,m"),
+                new Translation("lelki betegésgeket beképzelő", "psychohonder", "-i,m"),
+                new Translation("testi betegségeket beképzelő", "hpyochonder", "-i,m"),
         };
     }
 
