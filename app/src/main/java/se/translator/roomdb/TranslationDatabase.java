@@ -61,7 +61,6 @@ public abstract class TranslationDatabase extends RoomDatabase {
             database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('lelki betegésgeket beképzelő', 'psychohonder', 'i,m')");
         }
     };
-    //new Translation("jel", "signum", "-i,n"),
     private static final Migration MIGRATION_5_6 = new Migration(5, 6) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
