@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Translation.class}, version = 5, exportSchema = false)
+@Database(entities = {Translation.class}, version = 6, exportSchema = false)
 public abstract class TranslationDatabase extends RoomDatabase {
     private static TranslationDatabase dbInstance;
     private static final Object LOCK = new Object();
@@ -61,6 +61,16 @@ public abstract class TranslationDatabase extends RoomDatabase {
             database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('lelki betegésgeket beképzelő', 'psychohonder', 'i,m')");
         }
     };
+    //new Translation("jel", "signum", "-i,n"),
+    private static final Migration MIGRATION_5_6 = new Migration(5, 6) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('szükséges', 'necessarius', '3')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('szűkület', 'stenosis', '-is,f')");
+            database.execSQL("insert into Translation (wordHu, wordLa, suffixLa) values ('jel', 'signum', '-i,n')");
+            database.execSQL("update Translation set suffixLa = '-ei,f' where wordLa = 'dies'");
+        }
+    };
 
     public static TranslationDatabase getInstance(Context context) {
         if (dbInstance == null) {
@@ -104,7 +114,7 @@ public abstract class TranslationDatabase extends RoomDatabase {
                             translationDao.insertAll(Dictionary.populateTranslationsZ());
                         });
                     }
-                }).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5).build();
+                }).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6).build();
     }
 
     public abstract TranslationDao translationDao();
