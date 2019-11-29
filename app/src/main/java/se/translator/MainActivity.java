@@ -47,11 +47,13 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView editTextHuLa;
     TextView textViewHuLa;
     RelativeLayout mainLayoutHu;
+    Locale localeHu;
 
     TextToSpeech textToSpeechHuLa;
     AutoCompleteTextView editTextLaHu;
     TextView textViewLaHu;
     RelativeLayout mainLayoutLa;
+    Locale localeLa;
     TextView suffixLa;
 
     @Override
@@ -71,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
         Button translateButtonHu=findViewById(R.id.translateButtonHu);
         Button changeButtonHu=findViewById(R.id.changeButtonHu);
         mainLayoutHu=findViewById(R.id.mainLayoutHu);
+        localeHu=new Locale("hu");
         textToSpeechHuLa =new TextToSpeech(getApplicationContext(), status -> {
             if(status != TextToSpeech.ERROR) {
-                textToSpeechHuLa.setLanguage(Locale.getDefault());
+                textToSpeechHuLa.setLanguage(localeHu);
                 textToSpeechHuLa.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
@@ -104,16 +107,17 @@ public class MainActivity extends AppCompatActivity {
         Button translateButtonLa=findViewById(R.id.translateButtonLa);
         Button changeButtonLa=findViewById(R.id.changeButtonLa);
         mainLayoutLa=findViewById(R.id.mainLayoutLa);
+        localeLa=Locale.ITALIAN;
         textToSpeechLaHu =new TextToSpeech(getApplicationContext(), status -> {
             if(status != TextToSpeech.ERROR) {
-                textToSpeechLaHu.setLanguage(Locale.ITALY);
+                textToSpeechLaHu.setLanguage(localeLa);
                 textToSpeechLaHu.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
         suffixLa =findViewById(R.id.suffixLa);
 
-        initComponents(editTextHuLa, speakHu, textViewHuLa, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLaHu, mainLayoutLa, Locale.getDefault(), Locale.ITALY, RetrieveTranslationHuLa.class);
-        initComponents(editTextLaHu, speakLa, textViewLaHu, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHuLa, mainLayoutHu, Locale.ITALY, Locale.getDefault(), RetrieveTranslationLaHu.class);
+        initComponents(editTextHuLa, speakHu, textViewHuLa, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLaHu, mainLayoutLa, localeHu, localeLa, RetrieveTranslationHuLa.class);
+        initComponents(editTextLaHu, speakLa, textViewLaHu, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHuLa, mainLayoutHu, localeLa, localeHu, RetrieveTranslationLaHu.class);
         Spinner declinatioSpinner = findViewById(R.id.declinatioSpinner);
         final TouchImageView declinatioImageView = findViewById(R.id.declinatioImageView);
         declinatioSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -132,10 +136,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, localeFrom.getLanguage());
-            intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1000);
-            intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 1000);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, localeFrom);
-            intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "org.alexander.berg");
+            intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "se.translator");
             intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Beszélj :)");
             try {
                 startActivityForResult(intent, REQ_CODE);
@@ -175,11 +177,11 @@ public class MainActivity extends AppCompatActivity {
             if (mainLayoutHu.getVisibility() == View.VISIBLE) {
                 editTextHuLa.setText(Objects.requireNonNull(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)).get(0));
                 editTextHuLa.dismissDropDown();
-                speakAndWrite(Locale.getDefault(), Locale.ITALY,editTextHuLa, textViewHuLa, textToSpeechLaHu, new RetrieveTranslationHuLa());
+                speakAndWrite(localeHu, localeLa,editTextHuLa, textViewHuLa, textToSpeechLaHu, new RetrieveTranslationHuLa());
             } else {
                 editTextLaHu.setText(Objects.requireNonNull(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)).get(0));
                 editTextLaHu.dismissDropDown();
-                speakAndWrite(Locale.ITALY, Locale.getDefault(), editTextLaHu, textViewLaHu, textToSpeechHuLa, new RetrieveTranslationLaHu());
+                speakAndWrite(localeLa, localeHu, editTextLaHu, textViewLaHu, textToSpeechHuLa, new RetrieveTranslationLaHu());
             }
         }
     }
@@ -189,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         AsyncTask.execute(() -> {
             String toSpeak = null;
             StringBuilder toShow = new StringBuilder();
-            if (from.equals(Locale.getDefault()) && to.equals(Locale.ITALY)) {
+            if (from.equals(localeHu) && to.equals(localeLa)) {
                 List<Translation> results = db.translationDao().findByWordHuLa(text);
                 for (Translation result : results) {
                     if (toSpeak == null) {
@@ -200,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     toShow.append(result.getWordLa()).append(!result.getSuffixLa().isEmpty() ? ", " : "").append(result.getSuffixLa());
                 }
-            } else if (from.equals(Locale.ITALY) && to.equals(Locale.getDefault())) {
+            } else if (from.equals(localeLa) && to.equals(localeHu)) {
                 List<Translation> results = db.translationDao().findByWordLaHu(text);
                 for (Translation result : results) {
                     if (toSpeak == null) {
