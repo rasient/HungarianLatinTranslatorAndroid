@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
         });
         autoCompleteTextView.setOnKeyListener((v, keyCode, event) -> {
             // If the event is a key-down event on the "enter" button
-            //TODO: test on mobile
             if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 hideKeyboardAndSearch(localeFrom, localeTo, autoCompleteTextView, textView, textToSpeech, clazz);
