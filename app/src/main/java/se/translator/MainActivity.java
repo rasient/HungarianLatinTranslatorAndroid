@@ -11,6 +11,7 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -63,15 +64,38 @@ public class MainActivity extends AppCompatActivity {
         ((AudioManager) Objects.requireNonNull(getSystemService(Context.AUDIO_SERVICE))).setParameters("noise_suppression=on");
         db = TranslationDatabase.getInstance(getApplicationContext());
 
+        initHuLa();
+        ImageView speakHu = findViewById(R.id.speakHu);
+        Button translateButtonHu=findViewById(R.id.translateButtonHu);
+        Button changeButtonHu=findViewById(R.id.changeButtonHu);
+
+        initLaHu();
+        ImageView speakLa = findViewById(R.id.speakLa);
+        Button translateButtonLa=findViewById(R.id.translateButtonLa);
+        Button changeButtonLa=findViewById(R.id.changeButtonLa);
+
+        initComponents(editTextHuLa, speakHu, textViewHuLa, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLaHu, mainLayoutLa, localeHu, localeLa, RetrieveTranslationHuLa.class);
+        initComponents(editTextLaHu, speakLa, textViewLaHu, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHuLa, mainLayoutHu, localeLa, localeHu, RetrieveTranslationLaHu.class);
+        Spinner declinatioSpinner = findViewById(R.id.declinatioSpinner);
+        final TouchImageView declinatioImageView = findViewById(R.id.declinatioImageView);
+        declinatioSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                declinatioImageView.setImageResource( id == 0 ? R.drawable.declinatio0 : (id == 1 ? R.drawable.declinatio1 : (id == 2 ? R.drawable.declinatio2 : (id == 3 ? R.drawable.praepositio : R.drawable.prefix))));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    private void initHuLa() {
         editTextHuLa =findViewById(R.id.editTextHu);
         AsyncTask.execute(() -> {
             String [] words = db.translationDao().getAllWordHu();
             runOnUiThread(() -> editTextHuLa.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, words)));
         });
-        ImageView speakHu = findViewById(R.id.speakHu);
         textViewHuLa =findViewById(R.id.textViewHu);
-        Button translateButtonHu=findViewById(R.id.translateButtonHu);
-        Button changeButtonHu=findViewById(R.id.changeButtonHu);
         mainLayoutHu=findViewById(R.id.mainLayoutHu);
         localeHu=new Locale("hu");
         textToSpeechHuLa =new TextToSpeech(getApplicationContext(), status -> {
@@ -80,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
                 textToSpeechHuLa.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
+    }
 
+    private void initLaHu() {
         editTextLaHu =findViewById(R.id.editTextLa);
         AsyncTask.execute(() -> {
             String [] words = db.translationDao().getAllWordLa();
@@ -102,10 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-        ImageView speakLa = findViewById(R.id.speakLa);
         textViewLaHu =findViewById(R.id.textViewLa);
-        Button translateButtonLa=findViewById(R.id.translateButtonLa);
-        Button changeButtonLa=findViewById(R.id.changeButtonLa);
         mainLayoutLa=findViewById(R.id.mainLayoutLa);
         localeLa=Locale.ITALIAN;
         textToSpeechLaHu =new TextToSpeech(getApplicationContext(), status -> {
@@ -115,23 +138,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         suffixLa =findViewById(R.id.suffixLa);
-
-        initComponents(editTextHuLa, speakHu, textViewHuLa, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLaHu, mainLayoutLa, localeHu, localeLa, RetrieveTranslationHuLa.class);
-        initComponents(editTextLaHu, speakLa, textViewLaHu, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHuLa, mainLayoutHu, localeLa, localeHu, RetrieveTranslationLaHu.class);
-        Spinner declinatioSpinner = findViewById(R.id.declinatioSpinner);
-        final TouchImageView declinatioImageView = findViewById(R.id.declinatioImageView);
-        declinatioSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                declinatioImageView.setImageResource( id == 0 ? R.drawable.declinatio0 : (id == 1 ? R.drawable.declinatio1 : (id == 2 ? R.drawable.declinatio2 : (id == 3 ? R.drawable.praepositio : R.drawable.prefix))));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
     }
 
-    private void initComponents(final EditText editText, ImageView speak, final TextView textView, Button translateButton, Button changeButton, final RelativeLayout mainLayout, final TextToSpeech textToSpeech, final RelativeLayout mainLayoutNew, final Locale localeFrom, final Locale localeTo, final Class clazz) {
+    private void initComponents(final AutoCompleteTextView autoCompleteTextView, ImageView speak, final TextView textView, Button translateButton, Button changeButton, final RelativeLayout mainLayout, final TextToSpeech textToSpeech, final RelativeLayout mainLayoutNew, final Locale localeFrom, final Locale localeTo, final Class clazz) {
         speak.setOnClickListener(v -> {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -148,25 +157,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        translateButton.setOnClickListener(v -> {
-            try {
-                InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                //Find the currently focused view, so we can grab the correct window token from it.
-                View view = this.getCurrentFocus();
-                //If no view currently has focus, create a new one, just so we can grab a window token from it
-                if (view == null) {
-                    view = new View(this);
-                }
-                Objects.requireNonNull(imm).hideSoftInputFromWindow(view.getWindowToken(), 0);
-                speakAndWrite(localeFrom, localeTo, editText, textView, textToSpeech, (RetrieveTranslation) clazz.newInstance());
-            } catch (IllegalAccessException | InstantiationException e) {
-                e.printStackTrace();
-            }
-        });
+        translateButton.setOnClickListener(v -> hideKeyboardAndSearch(localeFrom, localeTo, autoCompleteTextView, textView, textToSpeech, clazz));
 
         changeButton.setOnClickListener(v -> {
             mainLayout.setVisibility(View.GONE);
             mainLayoutNew.setVisibility(View.VISIBLE);
+        });
+        autoCompleteTextView.setOnKeyListener((v, keyCode, event) -> {
+            // If the event is a key-down event on the "enter" button
+            //TODO: test on mobile
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                hideKeyboardAndSearch(localeFrom, localeTo, autoCompleteTextView, textView, textToSpeech, clazz);
+                return true;
+            }
+            return false;
         });
     }
 
@@ -183,6 +188,22 @@ public class MainActivity extends AppCompatActivity {
                 editTextLaHu.dismissDropDown();
                 speakAndWrite(localeLa, localeHu, editTextLaHu, textViewLaHu, textToSpeechHuLa, new RetrieveTranslationLaHu());
             }
+        }
+    }
+
+    private void hideKeyboardAndSearch(Locale localeFrom, Locale localeTo, EditText editText, TextView textView, TextToSpeech textToSpeech, Class clazz) {
+        try {
+            InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            //Find the currently focused view, so we can grab the correct window token from it.
+            View view = this.getCurrentFocus();
+            //If no view currently has focus, create a new one, just so we can grab a window token from it
+            if (view == null) {
+                view = new View(this);
+            }
+            Objects.requireNonNull(imm).hideSoftInputFromWindow(view.getWindowToken(), 0);
+            speakAndWrite(localeFrom, localeTo, editText, textView, textToSpeech, (RetrieveTranslation) clazz.newInstance());
+        } catch (IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
         }
     }
 
