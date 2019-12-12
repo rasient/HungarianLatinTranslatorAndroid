@@ -68,14 +68,16 @@ public class MainActivity extends AppCompatActivity {
         ImageView speakHu = findViewById(R.id.speakHu);
         Button translateButtonHu=findViewById(R.id.translateButtonHu);
         Button changeButtonHu=findViewById(R.id.changeButtonHu);
+        ImageView clearHu=findViewById(R.id.clearHu);
 
         initLaHu();
         ImageView speakLa = findViewById(R.id.speakLa);
         Button translateButtonLa=findViewById(R.id.translateButtonLa);
         Button changeButtonLa=findViewById(R.id.changeButtonLa);
+        ImageView clearLa=findViewById(R.id.clearLa);
 
-        initComponents(editTextHuLa, speakHu, textViewHuLa, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLaHu, mainLayoutLa, localeHu, localeLa, RetrieveTranslationHuLa.class);
-        initComponents(editTextLaHu, speakLa, textViewLaHu, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHuLa, mainLayoutHu, localeLa, localeHu, RetrieveTranslationLaHu.class);
+        initComponents(editTextHuLa, clearHu, speakHu, textViewHuLa, translateButtonHu, changeButtonHu, mainLayoutHu, textToSpeechLaHu, mainLayoutLa, localeHu, localeLa, RetrieveTranslationHuLa.class);
+        initComponents(editTextLaHu, clearLa, speakLa, textViewLaHu, translateButtonLa, changeButtonLa, mainLayoutLa, textToSpeechHuLa, mainLayoutHu, localeLa, localeHu, RetrieveTranslationLaHu.class);
         Spinner declinatioSpinner = findViewById(R.id.declinatioSpinner);
         final TouchImageView declinatioImageView = findViewById(R.id.declinatioImageView);
         declinatioSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -140,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
         suffixLa =findViewById(R.id.suffixLa);
     }
 
-    private void initComponents(final AutoCompleteTextView autoCompleteTextView, ImageView speak, final TextView textView, Button translateButton, Button changeButton, final RelativeLayout mainLayout, final TextToSpeech textToSpeech, final RelativeLayout mainLayoutNew, final Locale localeFrom, final Locale localeTo, final Class clazz) {
+    private void initComponents(final AutoCompleteTextView autoCompleteTextView, ImageView clear, ImageView speak, final TextView textView, Button translateButton, Button changeButton, final RelativeLayout mainLayout, final TextToSpeech textToSpeech, final RelativeLayout mainLayoutNew, final Locale localeFrom, final Locale localeTo, final Class clazz) {
+        clear.setOnClickListener(v -> autoCompleteTextView.setText(""));
+
         speak.setOnClickListener(v -> {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);

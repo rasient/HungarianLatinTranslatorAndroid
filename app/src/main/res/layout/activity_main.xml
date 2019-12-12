@@ -41,6 +41,12 @@
                 android:layout_width="0dp">
             </AutoCompleteTextView>
             <ImageView
+                android:id="@+id/clearHu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@android:drawable/ic_delete" />
+            <ImageView
                 android:id = "@+id/speakHu"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
@@ -106,6 +112,12 @@
                 android:layout_height="wrap_content"
                 android:layout_width="0dp">
             </AutoCompleteTextView>
+            <ImageView
+                android:id="@+id/clearLa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@android:drawable/ic_delete" />
             <ImageView
                 android:id = "@+id/speakLa"
                 android:layout_width = "wrap_content"
